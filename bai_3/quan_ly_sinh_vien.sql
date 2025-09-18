@@ -96,3 +96,27 @@ from mark m
 join student stu on stu.studentid = m.studentid
 join subject sub on sub.subid = m.subid
 order by m.mark desc, stu.studentname asc;
+
+
+-- Hiển thị tất cả các thông tin môn học (bảng subject) có credit lớn nhất.
+select s.subname, s.credit
+from subject s
+where s.credit = (select max(s.credit) from subject s);
+
+select *
+from subject 
+order by credit desc
+limit 1;
+-- Hiển thị các thông tin môn học có điểm thi lớn nhất.
+select s.subname, m.mark
+from mark m 
+join subject s on s.subid = m.subid
+order by mark desc
+limit 1;
+
+-- Hiển thị các thông tin sinh viên và điểm trung bình của mỗi sinh viên, xếp hạng theo thứ tự điểm giảm dần
+select s.studentid, s.studentname, avg(m.mark) as avgmark
+from student s
+join mark m on m.studentid = s.studentid
+group by s.studenid, s.studentname
+order by avgmark desc;
