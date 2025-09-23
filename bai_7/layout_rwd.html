@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #222;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav a {
+            color: #ccc;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+
+        .nav a.active, .nav a:hover {
+            background: #444;
+            color: #fff;
+            border-radius: 3px;
+        }
+
+        .login {
+            font-size: 14px;
+        }
+
+        /* Layout chính */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+
+        .sidebar-left {
+            flex: 1 1 150px;
+            background: #f2f2f2;
+            padding: 15px;
+        }
+
+        .sidebar-left a {
+            display: block;
+            margin-bottom: 10px;
+            color: #3366cc;
+            text-decoration: none;
+        }
+
+        .content {
+            flex: 3 1 500px;
+            padding: 15px;
+        }
+
+        .sidebar-right {
+            flex: 1 1 150px;
+            background: #f2f2f2;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ads {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #444;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar-left, .sidebar-right {
+                flex: 1 1 100%;
+                order: 2;
+            }
+            .content {
+                order: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">Logo</div>
+    <div class="nav">
+        <a href="#" class="active">Home</a>
+        <a href="#">About</a>
+        <a href="#">Projects</a>
+        <a href="#">Contact</a>
+    </div>
+    <div class="login">Login</div>
+</div>
+
+<div class="container">
+    <div class="sidebar-left">
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+    </div>
+
+    <div class="content">
+        <h1>Welcome</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+        <hr>
+        <h2>Test</h2>
+        <p>Lorem ipsum...</p>
+    </div>
+
+    <div class="sidebar-right">
+        <div class="ads">ADS</div>
+        <div class="ads">ADS</div>
+    </div>
+</div>
+
+<div class="footer">
+    Footer Text
+</div>
+
+</body>
+</html>
