@@ -1,0 +1,47 @@
+/* Base styles - Áp dụng cho màn hình nhỏ hơn 500px */
+.gallery-container {
+    display: flex;
+    flex-direction: column; /* Hiển thị 1 ảnh/dòng theo chiều dọc */
+    gap: 16px; /* Khoảng cách giữa các ảnh */
+}
+
+.gallery-card {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    box-sizing: border-box; /* Đảm bảo padding không làm vỡ layout */
+}
+
+.gallery-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Ẩn phần mô tả trên màn hình nhỏ nếu không cần */
+.description {
+    text-align: center;
+    padding: 8px 0;
+}
+
+/* Media Query cho màn hình nhỏ hơn 700px (từ 500px đến 699px) */
+@media (min-width: 500px) and (max-width: 699px) {
+    .gallery-container {
+        flex-direction: row; /* Hiển thị 2 ảnh/dòng theo chiều ngang */
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .gallery-card {
+        width: 45%; /* Khoảng 45% để chừa khoảng cách ở giữa */
+    }
+}
+
+/* Media Query cho màn hình lớn hơn 700px */
+@media (min-width: 700px) {
+    .gallery-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .gallery-card {
+        width: 23%; /* Khoảng 23% để hiển thị 4 ảnh/dòng */
+    }
+}
