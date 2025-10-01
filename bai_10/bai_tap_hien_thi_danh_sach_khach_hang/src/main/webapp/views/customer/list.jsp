@@ -15,14 +15,14 @@
 </head>
 <body>
 <c:import url="../layout/navbar.jsp"/>
-<a href="/students?action=add"> Thêm mới </a>
+<a href="/customers?action=add"> Thêm mới </a>
 <h1>Danh sách khách hàng</h1>
 <table class="table table-dark table-striped">
     <tr>
         <th>Tên</th>
         <th>Ngày sinh</th>
         <th>Địa chỉ</th>
-        <th>Ảnh</th>
+        <th>Email</th>
     </tr>
     <c:forEach var="customer" items="${customerList}" varStatus="status">
         <tr>
@@ -30,7 +30,7 @@
             <td>${customer.name}</td>
             <td>${customer.dateOfBirth}</td>
             <td>${customer.address}</td>
-            <td>${customer.photo}</td>
+            <td>${customer.email}</td>
 
         </tr>
     </c:forEach>

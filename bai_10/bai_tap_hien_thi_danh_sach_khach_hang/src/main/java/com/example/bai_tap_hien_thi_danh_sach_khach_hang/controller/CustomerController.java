@@ -49,12 +49,11 @@ public class CustomerController extends HttpServlet {
         switch (action) {
             case "add":
                 // trả về form thêm mới
-                int id = Integer.parseInt(req.getParameter("id"));
                 String name = req.getParameter("name");
                 String dateOfBirth = req.getParameter("dateOfBirth");
-                String address = req.getParameter("adress");
-                String photo = req.getParameter("photo");
-                Customer customer = new Customer(id,name,dateOfBirth, address, photo);
+                String address = req.getParameter("address");
+                String email = req.getParameter("email");
+                Customer customer = new Customer(name,dateOfBirth, address, email);
                 customerService.add(customer);
                 List<Customer> customerList2 = customerService.findAll();
                 req.setAttribute("customerList", customerList2);

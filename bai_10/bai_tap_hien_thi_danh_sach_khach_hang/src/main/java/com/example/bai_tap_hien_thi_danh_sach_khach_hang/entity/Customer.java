@@ -5,17 +5,24 @@ public class Customer {
     private String name;
     private String dateOfBirth;
     private String address;
-    private String photo;
+    private String email;
 
     public Customer() {
     }
 
-    public Customer(int id, String name, String dateOfBirth, String address, String photo) {
+    public Customer(int id, String name, String dateOfBirth, String address, String email) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
-        this.photo = photo;
+        this.email = email;
+    }
+
+    public Customer(String name, String dateOfBirth, String address, String email) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.email = email;
     }
 
     public int getId() {
@@ -50,11 +57,11 @@ public class Customer {
         this.address = address;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

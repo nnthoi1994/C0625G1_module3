@@ -16,6 +16,6 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public boolean add(Customer customer) {
-        return false;
+       return customerRepository.add(customer);
     }
 }
