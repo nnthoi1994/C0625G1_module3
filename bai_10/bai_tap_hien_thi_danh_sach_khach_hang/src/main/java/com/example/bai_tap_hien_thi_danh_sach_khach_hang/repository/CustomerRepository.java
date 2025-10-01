@@ -13,6 +13,7 @@ import java.util.List;
 public class CustomerRepository implements ICustomerRepository{
     private final static String SELECT_ALL = "select * from khach_hang";
     private final static String ADD_NEW = "insert into khach_hang(ho_ten,ngay_sinh,dia_chi,email) values (?,?,?,?)";
+    private final static String UPDATE = "update khach_hang set ho_ten=?,ngay_sinh=?,dia_chi=?,email=? where ma_khach_hang=?";
 
 
 
