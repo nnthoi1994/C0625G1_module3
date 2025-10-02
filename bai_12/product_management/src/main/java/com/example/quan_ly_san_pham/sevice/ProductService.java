@@ -24,4 +24,9 @@ public class ProductService implements IProductService {
     public boolean delete(int id) {
         return productRepository.delete(id);
     }
+
+    @Override
+    public List<Product> searchByName(String name, String categoryID) {
+        return productRepository.searchByName(name);
+    }
 }

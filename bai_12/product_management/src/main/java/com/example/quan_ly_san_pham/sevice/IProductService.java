@@ -9,4 +9,5 @@ public interface IProductService {
     List<ProductDto> findAll();
     boolean add(Product product);
     boolean delete (int id);
+    List<Product> searchByName(String name, String categoryID);
 }
