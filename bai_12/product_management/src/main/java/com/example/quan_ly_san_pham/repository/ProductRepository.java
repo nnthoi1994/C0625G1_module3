@@ -14,8 +14,8 @@ public class ProductRepository implements IProductRepository {
     private final static String SELECT_ALL = "SELECT p.id, p.name, p.price,c.name AS categoryName " + "FROM products p " + "JOIN categories c ON p.category_id = c.id;";
     private final static String ADD_NEW = "insert into products(name,price,category_id) values (?,?,?)";
     private final static String DELETE = "DELETE FROM Products WHERE id = ?";
-
-
+    private static final String SELECT_BY_ID_PRODUCT =  "SELECT p.id, p.name, p.price, c.name AS categoryName FROM products p JOIN categories c ON p.category_id = c.id WHERE 1=1";
+    private static final String UPDATE_PRODUCT = "UPDATE products SET name = ?, price = ?, category_id = ? WHERE id = ?";
 
     @Override
     public List<ProductDto> findAll() {
@@ -69,5 +69,83 @@ public class ProductRepository implements IProductRepository {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+
+
+
+    public List<ProductDto> search(String name, String categoryId) {
+        List<ProductDto> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(SELECT_BY_ID_PRODUCT);
+        if (name != null && !name.isEmpty()) {
+            sql.append(" AND p.name LIKE ?");
+        }
+        if (categoryId != null && !categoryId.isEmpty()) {
+            sql.append(" AND c.id = ?");
+        }
+        try (Connection connection = BaseRepository.getConnectDB();
+             PreparedStatement ps = connection.prepareStatement(sql.toString())) {
+
+            int index = 1;
+            if (name != null && !name.isEmpty()) {
+                ps.setString(index++, "%" + name + "%");
+            }
+            if (categoryId != null && !categoryId.isEmpty()) {
+                ps.setInt(index++, Integer.parseInt(categoryId));
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new ProductDto(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("price"),
+                        rs.getString("categoryName")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public boolean update(Product product) {
+        try (Connection connection = BaseRepository.getConnectDB();
+             PreparedStatement ps = connection.prepareStatement(UPDATE_PRODUCT)) {
+
+            ps.setString(1, product.getName());
+            ps.setInt(2, product.getPrice());
+            ps.setInt(3, product.getCategoryId());
+            ps.setInt(4, product.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Product findByIdProduct(int id) {
+        try (Connection connection = BaseRepository.getConnectDB();
+             PreparedStatement ps = connection.prepareStatement("SELECT p.id, p.name, p.price, p.category_id, c.name AS categoryName " +
+                     "FROM products p JOIN categories c ON p.category_id = c.id WHERE p.id = ?")) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Product(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("price"),
+                        rs.getInt("category_id")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

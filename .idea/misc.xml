@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/bai_10/bai_tap_hien_thi_danh_sach_khach_hang" />
+    <file type="web" url="file://$PROJECT_DIR$/bai_10/calculator" />
+    <file type="web" url="file://$PROJECT_DIR$/bai_10/thuc_hanh/currency-converter-jsp" />
+    <file type="web" url="file://$PROJECT_DIR$/bai_12/product_management" />
+    <file type="web" url="file://$PROJECT_DIR$/bai_9/demo" />
+    <file type="web" url="file://$PROJECT_DIR$/bai_9/demo2/demo" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

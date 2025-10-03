@@ -9,6 +9,9 @@ public interface IProductRepository {
     List<ProductDto> findAll();
     boolean add(Product product);
     boolean delete(int id);
-    List<Product> searchByName(String name, String categoryID);
+    List<ProductDto> search(String name, String categoryId);
+    boolean update(Product product);
+    Product findByIdProduct(int id);
+
 
 }

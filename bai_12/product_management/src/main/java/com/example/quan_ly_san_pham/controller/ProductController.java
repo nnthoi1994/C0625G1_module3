@@ -36,13 +36,15 @@ public class ProductController extends HttpServlet {
             case "delete":
                 deleteProduct(req, resp);
                 break;
+            case "edit":
+                showEditForm(req,resp);
+                break;
             default:
-                List<ProductDto> productList = productService.findAll();
-                req.setAttribute("productList", productList);
-                req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
+                listProduct(req, resp);
         }
 
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -57,9 +59,68 @@ public class ProductController extends HttpServlet {
             case "delete":
                 // xoá
                 break;
+            case "edit":
+                editProduct(req, resp);
+                break;
             default:
                  listProduct(req, resp);
         }
+    }
+
+
+    private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        Product product = productService.findByIdProduct(id);
+        List<Category> categories = categoryService.findAll();
+
+        req.setAttribute("product", product);
+        req.setAttribute("categories", categories);
+        req.getRequestDispatcher("views/product/edit.jsp").forward(req, resp);
+    }
+
+    private void editProduct(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            int price = Integer.parseInt(request.getParameter("price"));
+            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+
+            Product product = new Product(id, name, price,  categoryId);
+
+            boolean updated = productService.update(product);
+            if (updated) {
+                System.out.println("Update thành công: " + id);
+            } else {
+                System.out.println("Update thất bại: " + id);
+            }
+
+            response.sendRedirect("/products");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendRedirect("/products");
+        }
+    }
+
+    private void listProduct(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String searchName = req.getParameter("name");
+        String searchCategory = req.getParameter("categoryId");
+
+        List<ProductDto> productList;
+        if ((searchName != null && !searchName.isEmpty()) ||
+                (searchCategory != null && !searchCategory.isEmpty())) {
+            productList = productService.search(searchName, searchCategory);
+        } else {
+            productList = productService.findAll();
+        }
+        List<Category> categories = categoryService.findAll();
+        req.setAttribute("productList", productList);
+        req.setAttribute("categories", categories);
+        req.setAttribute("selectedCategory", searchCategory);
+        req.setAttribute("searchName", searchName);
+        req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp)
@@ -79,12 +140,7 @@ public class ProductController extends HttpServlet {
         req.getRequestDispatcher("views/product/add.jsp").forward(req, resp);
     }
 
-    private void listProduct(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        List<ProductDto> productList = productService.findAll();
-        req.setAttribute("productList", productList);
-        req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
-    }
+
 
     private void deleteProduct(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
@@ -92,6 +148,8 @@ public class ProductController extends HttpServlet {
         productService.delete(id);
         resp.sendRedirect("/products");
     }
+
+
 
 
 }

@@ -25,8 +25,19 @@ public class ProductService implements IProductService {
         return productRepository.delete(id);
     }
 
+
     @Override
-    public List<Product> searchByName(String name, String categoryID) {
-        return productRepository.searchByName(name);
+    public boolean update(Product product) {
+        return productRepository.update(product);
+    }
+
+    @Override
+    public List<ProductDto> search(String name, String categoryId) {
+        return productRepository.search(name, categoryId);
+    }
+
+    @Override
+    public Product findByIdProduct(int id) {
+        return productRepository.findByIdProduct(id);
     }
 }

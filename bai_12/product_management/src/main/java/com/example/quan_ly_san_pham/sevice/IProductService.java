@@ -9,5 +9,7 @@ public interface IProductService {
     List<ProductDto> findAll();
     boolean add(Product product);
     boolean delete (int id);
-    List<Product> searchByName(String name, String categoryID);
+    boolean update(Product product);
+    List<ProductDto> search(String name, String categoryId);
+    Product findByIdProduct(int id);
 }

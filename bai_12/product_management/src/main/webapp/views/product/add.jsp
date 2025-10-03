@@ -1,35 +1,39 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Home
-  Date: 9/26/2025
-  Time: 11:00 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
-    <title>Thêm mới</title>
+    <title>Thêm sản phẩm mới</title>
     <c:import url="../layout/library.jsp"/>
 </head>
 <body>
-<c:import url="../layout/navbar.jsp"/>
-<h1>Thêm mới</h1>
+<h2>Thêm sản phẩm mới</h2>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <form action="/products?action=add" method="post">
-    Tên sản phẩm
-    <input name="name"><br>
+    <p>
+        <label>Tên sản phẩm:</label><br>
+        <input type="text" name="name" required>
+    </p>
 
-    Giá sản phẩm
-    <input name="price"><br>
+    <p>
+        <label>Giá sản phẩm:</label><br>
+        <input type="number" name="price" min="0" required>
+    </p>
 
-    Mã nhóm
-    <select name="category_id">
-        <c:forEach items="${categoryList}" var="cate">
-            <option value="${cate.id}">${cate.name}</option>
-        </c:forEach>
-    </select>
+    <p>
+        <label>Danh mục:</label><br>
+        <select name="category_id" required>
+            <option value="">-- Chọn danh mục --</option>
+            <c:forEach items="${categoryList}" var="cate">
+                <option value="${cate.id}">${cate.name}</option>
+            </c:forEach>
+        </select>
+    </p>
 
-    <button>Thêm mới</button>
+    <p>
+        <button type="submit">Lưu</button>
+        <a href="/products">Quay lại</a>
+    </p>
 </form>
 </body>
 </html>
