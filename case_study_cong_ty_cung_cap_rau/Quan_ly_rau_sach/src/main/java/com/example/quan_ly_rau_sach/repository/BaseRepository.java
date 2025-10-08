@@ -1,4 +1,4 @@
-package com.example.quan_ly_san_pham.repository;
+package com.example.quan_ly_rau_sach.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class BaseRepository {
 
-    private static final String URL ="jdbc:mysql://8aff094b0864.sn.mynetname.net:69/product_management"; // sửa lại tên của csdl
+    private static final String URL ="jdbc:mysql://localhost:3306/quan_ly_hang_hoa2"; // sửa lại tên của csdl
     private static final String USER ="root";// mặc định của mysql
     private static final String PASS ="codegym";// do cài đặt khi cài đặt mysql
     public static Connection getConnectDB(){
