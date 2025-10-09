@@ -22,7 +22,7 @@ private IHangHoaRepository hangHoaRepository = new HangHoaRepository();
 
     @Override
     public boolean delete(int maHangHoa) {
-        return false;
+        return hangHoaRepository.delete(maHangHoa);
     }
 
     @Override
@@ -32,11 +32,11 @@ private IHangHoaRepository hangHoaRepository = new HangHoaRepository();
 
     @Override
     public boolean update(HangHoa hangHoa) {
-        return false;
+        return hangHoaRepository.update(hangHoa);
     }
 
     @Override
     public HangHoa findByIdProduct(int maHangHoa) {
-        return null;
+        return hangHoaRepository.findByIdProduct(maHangHoa);
     }
 }

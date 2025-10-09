@@ -119,7 +119,7 @@
         $('#tableProduct').dataTable( {
             "dom": 'lrtip',
             "lengthChange": false,
-            "pageLength": 5
+            "pageLength": 10
         } );
     } );
 </script>

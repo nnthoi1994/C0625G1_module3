@@ -27,7 +27,7 @@
 
     <p>
         <label>Danh mục:</label><br>
-        <select name="ma_loai_hang" required>
+        <select name="ma_nhom_hang" required>
             <option value="">-- Chọn danh mục --</option>
             <c:forEach items="${nhomHang}" var="cate">
                 <option value="${cate.maNhomHang}">${cate.tenNhomHang}</option>

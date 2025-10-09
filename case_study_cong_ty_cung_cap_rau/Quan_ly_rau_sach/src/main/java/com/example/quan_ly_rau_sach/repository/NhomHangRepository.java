@@ -19,8 +19,8 @@ public class NhomHangRepository implements INhomHangRepository{
             preparedStatement = connection.prepareStatement("select * from nhom_hang");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt("ma_loai_hang");
-                String name = resultSet.getString("ten_loai_hang");
+                int id = resultSet.getInt("ma_nhom_hang");
+                String name = resultSet.getString("ten_nhom_hang");
                 NhomHang nhomHang = new NhomHang(id, name);
                 nhomList.add(nhomHang);
             }

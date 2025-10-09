@@ -76,7 +76,7 @@ public class HangHoaController extends HttpServlet {
 
         req.setAttribute("hangHoa", hangHoa);
         req.setAttribute("nhomHang", nhomHang);
-        req.getRequestDispatcher("views/hangHoa/edit.jsp").forward(req, resp);
+        req.getRequestDispatcher("views/hang_hoa/edit.jsp").forward(req, resp);
     }
 
     private void editHangHoa(HttpServletRequest request, HttpServletResponse response)
@@ -86,7 +86,7 @@ public class HangHoaController extends HttpServlet {
             String tenHang = request.getParameter("ten_hang_hoa");
             String donViTinh = request.getParameter("don_vi_tinh");
             int donGia = Integer.parseInt(request.getParameter("don_gia"));
-            int maLoaiHang = Integer.parseInt(request.getParameter("ma_loai_hang"));
+            int maLoaiHang = Integer.parseInt(request.getParameter("ma_nhom_hang"));
 
             HangHoa hangHoa = new HangHoa(maHang,tenHang,donViTinh,donGia,maLoaiHang);
 
@@ -129,7 +129,7 @@ public class HangHoaController extends HttpServlet {
         String tenHang = req.getParameter("ten_hang_hoa");
         String donViTinh = req.getParameter("don_vi_tinh");
         int donGia = Integer.parseInt(req.getParameter("don_gia"));
-        int maNhomHang = Integer.parseInt(req.getParameter("ma_loai_hang"));
+        int maNhomHang = Integer.parseInt(req.getParameter("ma_nhom_hang"));
         HangHoa hangHoa = new HangHoa(tenHang, donViTinh, donGia, maNhomHang);
         hangHoaService.add(hangHoa);
         resp.sendRedirect("/hangHoa");
@@ -146,9 +146,9 @@ public class HangHoaController extends HttpServlet {
 
     private void deleteHangHoa(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
-        hangHoaService.delete(id);
-        resp.sendRedirect("/hangHoas");
+        int maHangHoa = Integer.parseInt(req.getParameter("maHangHoa"));
+        hangHoaService.delete(maHangHoa);
+        resp.sendRedirect("/hangHoa");
     }
 
 

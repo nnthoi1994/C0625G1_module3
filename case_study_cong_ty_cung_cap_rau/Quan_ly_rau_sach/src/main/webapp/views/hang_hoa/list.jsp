@@ -107,7 +107,7 @@
         deleteModal.addEventListener("show.bs.modal", function (event) {
             var button = event.relatedTarget;   // nút Xóa được click
             var productId = button.getAttribute("data-id");
-            confirmDeleteBtn.href = "/products?action=delete&id=" + productId;
+            confirmDeleteBtn.href = "/hangHoa?action=delete&maHangHoa=" + productId;
         });
     });
 </script>
@@ -121,7 +121,7 @@
         $('#tableProduct').dataTable( {
             "dom": 'lrtip',
             "lengthChange": false,
-            "pageLength": 5
+            "pageLength": 3
         } );
     } );
 </script>

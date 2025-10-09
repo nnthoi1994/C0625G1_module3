@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HangHoaRepository implements IHangHoaRepository{
-    private final static String SELECT_ALL = "SELECT h.ma_hang, h.don_vi_tinh, h.ten_hang_hoa, h.don_gia,n.ten_loai_hang AS tenNhomHang " + "FROM hang_hoa h " + "JOIN nhom_hang n ON h.ma_loai_hang = n.ma_loai_hang;";
-    private final static String ADD_NEW = "insert into hang_hoa(ten_hang_hoa, don_vi_tinh, don_gia, ma_loai_hang) values (?,?,?,?)";
-    private final static String DELETE = "DELETE FROM hang_hoa WHERE ma_hang_hoa = ?";
-    private static final String SELECT_BY_ID_PRODUCT =  "SELECT h.ma_hang, h.ten_hang_hoa,h.don_vi_tinh, h.don_gia,n.ten_loai_hang AS tenNhomHang FROM hang_hoa h JOIN nhom_hang n ON h.ma_loai_hang = n.ma_loai_hang WHERE 1=1";
-    private static final String UPDATE_PRODUCT = "UPDATE hang_hoa SET ten_hang = ?, don_gia = ?, ma_nhom_hang = ? WHERE ma_hang = ?";
+    private final static String SELECT_ALL = "SELECT h.ma_hang, h.don_vi_tinh, h.ten_hang_hoa, h.don_gia,n.ten_nhom_hang AS tenNhomHang " + "FROM hang_hoa h " + "JOIN nhom_hang n ON h.ma_nhom_hang = n.ma_nhom_hang;";
+    private final static String ADD_NEW = "insert into hang_hoa(ten_hang_hoa, don_vi_tinh, don_gia, ma_nhom_hang) values (?,?,?,?)";
+    private final static String DELETE = "DELETE FROM hang_hoa WHERE ma_hang = ?";
+    private static final String SELECT_BY_ID_PRODUCT =  "SELECT h.ma_hang, h.ten_hang_hoa,h.don_vi_tinh, h.don_gia,n.ten_nhom_hang AS tenNhomHang FROM hang_hoa h JOIN nhom_hang n ON h.ma_nhom_hang = n.ma_nhom_hang WHERE 1=1";
+    private static final String UPDATE_PRODUCT = "UPDATE hang_hoa SET ten_hang_hoa = ?, don_vi_tinh = ?, don_gia = ?, ma_nhom_hang = ? WHERE ma_hang = ?";
 
 
     @Override
@@ -62,7 +62,16 @@ public class HangHoaRepository implements IHangHoaRepository{
 
     @Override
     public boolean delete(int maHangHoa) {
-        return false;
+        try (Connection connection = BaseRepository.getConnectDB();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
+
+            preparedStatement.setInt(1, maHangHoa);
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -73,7 +82,7 @@ public class HangHoaRepository implements IHangHoaRepository{
             sql.append(" AND h.ten_hang_hoa LIKE ?");
         }
         if (maNhomHang != null && !maNhomHang.isEmpty()) {
-            sql.append(" AND n.ma_loai_hang = ?");
+            sql.append(" AND n.ma_nhom_hang = ?");
         }
         try (Connection connection = BaseRepository.getConnectDB();
              PreparedStatement ps = connection.prepareStatement(sql.toString())) {
@@ -104,11 +113,42 @@ public class HangHoaRepository implements IHangHoaRepository{
 
     @Override
     public boolean update(HangHoa hangHoa) {
-        return false;
+        try (Connection connection = BaseRepository.getConnectDB();
+             PreparedStatement ps = connection.prepareStatement(UPDATE_PRODUCT)) {
+
+            ps.setString(1, hangHoa.getTenHangHoa ());
+            ps.setString(2, hangHoa.getDonViTinh());
+            ps.setInt(3, hangHoa.getDonGia());
+            ps.setInt(4, hangHoa.getMaNhomHang());
+            ps.setInt(5, hangHoa.getMaHangHoa());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public HangHoa findByIdProduct(int maHangHoa) {
+        try (Connection connection = BaseRepository.getConnectDB();
+             PreparedStatement ps = connection.prepareStatement("SELECT p.ma_hang, p.ten_hang_hoa,p.don_vi_tinh, p.don_gia, p.ma_nhom_hang, c.ten_nhom_hang AS tenNhomHang " +
+                     "FROM hang_hoa p JOIN nhom_hang c ON p.ma_nhom_hang = c.ma_nhom_hang WHERE p.ma_hang = ?")) {
+
+            ps.setInt(1, maHangHoa);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new HangHoa(
+                        rs.getInt("ma_hang"),
+                        rs.getString("ten_hang_hoa"),
+                        rs.getString("don_vi_tinh"),
+                        rs.getInt("don_gia"),
+                        rs.getInt("ma_nhom_hang")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
