@@ -10,7 +10,7 @@
 
 <html>
 <head>
-    <title>Quản lý sản phảm rau củ quả</title>
+    <title>Quản lý phòng trọ</title>
     <link rel="stylesheet" href="bootstrap520/css/bootstrap.min.css" />
     <link rel="stylesheet" href="datatables/css/dataTables.bootstrap5.min.css" />
     <c:import url="../layout/library.jsp"/>
@@ -20,58 +20,59 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h2 class="mb-3">Danh sách sản phẩm</h2>
-    <form class="row mb-3" method="get" action="/hangHoa">
+    <h2 class="mb-3">Danh sách phòng trọ</h2>
+    <form class="row mb-3" method="get" action="/phongTro">
         <div class="col">
-            <input type="text" name="tenHang" value="${ten}" class="form-control" placeholder="Tìm theo tên">
+            <input type="text" name="tenPhongTro" value="${tenNguoiThueTro}" class="form-control" placeholder="Tìm theo tên">
         </div>
         <div class="col">
-            <select name="maLoaiHang" class="form-select">
+            <select name="maThanhToan" class="form-select">
                 <option value="">Tất cả danh mục</option>
-                <c:forEach var="n" items="${nhomHang}">
-                    <option value="${n.maNhomHang}"
-                            <c:if test="${n.maNhomHang == selectedNhomHang}">selected</c:if>>
-                            ${n.tenNhomHang}
+                <c:forEach var="n" items="${thanhToan}">
+                    <option value="${n.maThanhToan}"
+                            <c:if test="${n.maThanhToan == selectedThanhToan}">selected</c:if>>
+                            ${n.tenThanhToan}
                     </option>
                 </c:forEach>
             </select>
         </div>
         <div class="col">
             <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-            <a href="/hangHoa" class="btn btn-secondary">Reset</a>
+            <a href="/phongTro" class="btn btn-secondary">Reset</a>
         </div>
         <div class="col">
-            <a href="/hangHoa?action=add" class="btn btn-success">Thêm mới sản phẩm</a>
+            <a href="/phongTro?action=add" class="btn btn-success">Thêm mới phòng trọ</a>
         </div>
     </form>
 
-    <h1>Danh sách sản phẩm</h1>
+    <h1>Danh sách phòng trọ</h1>
     <table id="tableProduct" class="table table-dark table-striped">
         <thead>
         <tr>
-            <th>STT</th>
-            <th>Tên</th>
-            <th>Đơn vị tính</th>
-            <th>Giá</th>
-            <th>Tên nhóm</th>
+            <th>ma nha tro</th>
+            <th>Tên người thuê phòng</th>
+            <th>Số điện thoại</th>
+            <th>Ngày bắt đầu</th>
+            <th>Hình thức thanh toán</th>
             <th>Thao tác</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="product" items="${sanPhamList}" varStatus="status">
+        <c:forEach var="product" items="${phongTroList}" varStatus="status">
             <tr>
                 <td>${startIndex + status.index + 1}</td>
-                <td>${product.tenHangHoa}</td>
-                <td>${product.donViTinh}</td>
-                <td>${product.donGia}</td>
-                <td>${product.tenNhomHang}</td>
+                <td>${product.tenNguoiThueTro}</td>
+                <td>${product.soDienThoai}</td>
+                <td>${product.ngayBatDau}</td>
+                <td>${product.tenThanhToan}</td>
+                <td>${product.ghiChu}</td>
                 <td>
-                    <a href="/hangHoa?action=edit&id=${product.maHangHoa}" class="btn btn-warning btn-sm">Sửa</a>
+
                     <!-- Nút mở modal -->
                     <a href="#" class="btn btn-danger btn-sm"
                        data-bs-toggle="modal"
                        data-bs-target="#confirmDeleteModal"
-                       data-id="${product.maHangHoa}">Xóa</a>
+                       data-id="${product.maPhongTro}">Xóa</a>
                 </td>
             </tr>
         </c:forEach>
@@ -88,7 +89,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                Bạn có chắc chắn muốn xóa sản phẩm này không?
+                Bạn có chắc chắn muốn xóa phòng này không?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -107,7 +108,7 @@
         deleteModal.addEventListener("show.bs.modal", function (event) {
             var button = event.relatedTarget;   // nút Xóa được click
             var productId = button.getAttribute("data-id");
-            confirmDeleteBtn.href = "/hangHoa?action=delete&maHangHoa=" + productId;
+            confirmDeleteBtn.href = "/phongTro?action=delete&maPhongTro=" + productId;
         });
     });
 </script>
